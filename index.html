@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخصات الصف عامه</title>
+    <style>
+        /* نفس التنسيق السابق */
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
+
+        body {
+            font-family: 'Amiri', serif;
+            text-align: center;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            transition: 1s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            position: relative;
+            transition: 1s ease;
+        }
+
+        h1 {
+            color: black;
+            text-shadow: 0 0 15px black, 0 0 20px yellow;
+            font-size: 36px;
+            transition: 1s ease;
+        }
+
+        .btn {
+            display: block;
+            width: 80%;
+            padding: 15px;
+            margin: 15px auto;
+            background-color: darkred;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px red;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: red;
+            box-shadow: 0 0 15px white;
+        }
+
+        .message, .warning {
+            font-size: 45px;
+            font-weight: bold;
+            text-shadow: 0 0 25px red;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .message {
+            color: white;
+            animation: bloodDrip 2s infinite alternate;
+        }
+
+        .warning {
+            color: darkred;
+            animation: shake 0.5s infinite alternate;
+        }
+
+        .arrow {
+            font-size: 60px;
+            color: red;
+            display: none;
+            animation: bounce 1s infinite;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80%;
+            max-width: 900px;
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            box-shadow: 0 0 40px red;
+            border-radius: 15px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        @keyframes bloodDrip {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); text-shadow: 0 0 30px red; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(-5px); }
+            100% { transform: translateX(5px); }
+        }
+
+        @keyframes dustEffect {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.2) translateY(-100px); }
+        }
+
+        .dust {
+            animation: dustEffect 1.5s forwards;
+        }
+
+        .scary-mode {
+            background-color: black;
+            color: white;
+        }
+
+        .scary-mode .container {
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 25px red;
+        }
+
+        .scary-mode h1 {
+            color: red;
+            text-shadow: 0 0 25px red;
+        }
+
+        .scary-mode .btn {
+            background-color: darkred;
+            color: white;
+        }
+
+        .scary-mode .btn:hover {
+            background-color: red;
+        }
+
+        .scary-mode .container {
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* التأثير المرعب بعد الفيديو */
+        .scary-message {
+            font-size: 60px;
+            color: red;
+            font-weight: bold;
+            text-shadow: 0 0 30px red, 0 0 40px darkred;
+            display: none;
+            animation: scaryMessage 3s forwards;
+            margin-top: 50px;
+        }
+
+        @keyframes scaryMessage {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; text-shadow: 0 0 60px red; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="scarySound" src="https://freesound.org/data/previews/408/408659_5121236-lq.mp3" autoplay></audio>
+
+    <div class="container" id="content">
+        <h1>ملخصات عامة</h1>
+        <button class="btn" onclick="startEffect()">كيمياء</button>
+        <button class="btn" onclick="startEffect()">فيزياء</button>
+        <button class="btn" onclick="startEffect()">أحياء</button>
+        <button class="btn" onclick="startEffect()">رياضيات</button>
+        <button class="btn" onclick="startEffect()">عربي</button>
+        <button class="btn" onclick="startEffect()">إسلامية</button>
+        <button class="btn" onclick="startEffect()">هذا وطني</button>
+    </div>
+
+    <div id="message" class="message">شاهد الفيديو التالي كامل...</div>
+    <div id="arrow" class="arrow">⬇</div>
+    <div id="warning" class="warning">أيها المنافقون... ماذا تنتظرون؟!</div>
+
+    <div id="videoContainer" class="video-container">
+        <!-- تضمين فيديو من يوتيوب مع خاصية التشغيل التلقائي -->
+        <iframe src="https://www.youtube.com/embed/9ieHNnsXjN4?autoplay=1&controls=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <!-- الرسالة بعد الفيديو -->
+    <div id="scaryMessage" class="scary-message">سنسير إلى غزة مشيت لتحرير</div>
+
+    <script>
+        function startEffect() {
+            let content = document.getElementById("content");
+            let message = document.getElementById("message");
+            let arrow = document.getElementById("arrow");
+            let warning = document.getElementById("warning");
+            let sound = document.getElementById("scarySound");
+
+            // تشغيل الصوت
+            sound.play();
+
+            // تفعيل وضع الرعب فقط بعد الضغط على الزر
+            document.body.classList.add("scary-mode");
+
+            // تفعيل تأثير التلاشي على شكل غبار
+            content.classList.add("dust");
+
+            setTimeout(() => {
+                content.style.display = "none";
+                message.style.display = "block";
+            }, 1500);
+
+            // بعد 2 ثوانٍ يظهر السهم
+            setTimeout(() => {
+                arrow.style.display = "block";
+            }, 2500);
+
+            // بعد 4 ثوانٍ تظهر العبارة المرعبة
+            setTimeout(() => {
+                arrow.style.display = "none";
+                warning.style.display = "block";
+            }, 4500);
+
+            // بعد 7 ثوانٍ يظهر الفيديو في وسط الشاشة بتأثير تدريجي مرعب
+            setTimeout(() => {
+                warning.style.display = "none";
+                let videoElement = document.getElementById("videoContainer");
+                videoElement.style.display = "block";
+                videoElement.style.opacity = "1";
+                videoElement.style.transform = "translate(-50%, -50%) scale(1)";
+            }, 7000);
+
+            // بعد انتهاء الفيديو يظهر النص
+            let videoPlayer = document.getElementById("videoContainer").querySelector('iframe');
+            videoPlayer.onload = function() {
+                let scaryMessage = document.getElementById("scaryMessage");
+                scaryMessage.style.display = "block";
+            };
+        }
+    </script>
+
+</body>
+</html>
